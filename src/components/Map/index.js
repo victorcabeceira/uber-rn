@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import MapView from 'react-native-maps';
+import React, { useState, useEffect, Fragment } from 'react';
+import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import { View } from 'react-native';
 
@@ -7,6 +7,9 @@ import Search from '../Search';
 import Directions from '../Directions';
 
 import { getPixelSize } from '../../shared/utils';
+
+import markerImage from '../../assets/images/marker.png';
+import dotImage from '../../assets/images/dot.png';
 
 const Map = () => {
   const [region, setRegion] = useState({
@@ -60,20 +63,32 @@ const Map = () => {
         ref={el => (this.mapView = el)}
       >
         {destination && (
-          <Directions
-            origin={region}
-            destination={destination}
-            onReady={result => {
-              this.mapView.fitToCoordinates(result.coordinates, {
-                edgePadding: {
-                  top: getPixelSize(30),
-                  right: getPixelSize(30),
-                  bottom: getPixelSize(30),
-                  left: getPixelSize(30)
-                }
-              });
-            }}
-          />
+          <Fragment>
+            <Directions
+              origin={region}
+              destination={destination}
+              onReady={result => {
+                this.mapView.fitToCoordinates(result.coordinates, {
+                  edgePadding: {
+                    top: getPixelSize(30),
+                    right: getPixelSize(30),
+                    bottom: getPixelSize(30),
+                    left: getPixelSize(30)
+                  }
+                });
+              }}
+            />
+            {/* <Marker
+              coordinate={region}
+              anchor={{ x: 0, y: 0 }}
+              image={dotImage}
+            /> */}
+            <Marker
+              coordinate={destination}
+              anchor={{ x: 0, y: 0 }}
+              image={markerImage}
+            />
+          </Fragment>
         )}
       </MapView>
 
