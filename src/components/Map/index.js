@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoding';
 import { View } from 'react-native';
 
 import Search from '../Search';
@@ -19,6 +20,8 @@ import {
   LocationTimeTextSmall
 } from './styles';
 
+Geocoder.init('AIzaSyBj116qcXXjCWz-qDFb5Ii6iVvkrO415Qs');
+
 const Map = () => {
   const [region, setRegion] = useState({
     latitude: -15.79515321,
@@ -27,11 +30,17 @@ const Map = () => {
     longitudeDelta: 0.0134
   });
   const [destination, setDestination] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [origin, setOrigin] = useState(null);
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
       // geo_success, geo_error, geo_options
-      ({ coords: { latitude, longitude } }) => {
+      async ({ coords: { latitude, longitude } }) => {
+        const response = await Geocoder.from({ latitude, longitude });
+        const address = response.results[0].formatted_address;
+        setOrigin(address.substring(0, address.indexOf(',')));
+
         setRegion({
           latitude,
           longitude,
@@ -76,6 +85,7 @@ const Map = () => {
               origin={region}
               destination={destination}
               onReady={result => {
+                setDuration(Math.floor(result.duration));
                 this.mapView.fitToCoordinates(result.coordinates, {
                   edgePadding: {
                     top: getPixelSize(30),
@@ -94,10 +104,10 @@ const Map = () => {
             <Marker coordinate={region} anchor={{ x: 0, y: 0 }}>
               <LocationBox>
                 <LocationTimeBox>
-                  <LocationTimeText>31</LocationTimeText>
+                  <LocationTimeText>{duration}</LocationTimeText>
                   <LocationTimeTextSmall>min</LocationTimeTextSmall>
                 </LocationTimeBox>
-                <LocationText>Cruzeiro Novo</LocationText>
+                <LocationText>{origin}</LocationText>
               </LocationBox>
             </Marker>
 
