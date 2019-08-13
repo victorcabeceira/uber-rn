@@ -19,7 +19,7 @@ const Details = ({ value }) => (
     <TypeImage source={uberx} />
     <TypeTitle>UberX</TypeTitle>
     <TypeDescription>
-      R${parseFloat(`${(value * (Math.random() * 2))}`).toFixed(2)}
+      R${parseFloat(`${(6.5 + value * (Math.random() * 2))}`).toFixed(2)}
     </TypeDescription>
 
     <RequestButton onPress={() => {}}>

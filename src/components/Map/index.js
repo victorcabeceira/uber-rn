@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 
 import Search from '../Search';
 import Directions from '../Directions';
@@ -11,14 +11,15 @@ import Details from '../Details';
 import { getPixelSize } from '../../shared/utils';
 
 import markerImage from '../../assets/images/marker.png';
-// import dotImage from '../../assets/images/dot.png';
+import backImage from '../../assets/images/back.png';
 
 import {
   LocationBox,
   LocationText,
   LocationTimeBox,
   LocationTimeText,
-  LocationTimeTextSmall
+  LocationTimeTextSmall,
+  Back
 } from './styles';
 
 Geocoder.init('AIzaSyBj116qcXXjCWz-qDFb5Ii6iVvkrO415Qs');
@@ -126,7 +127,12 @@ const Map = () => {
       </MapView>
 
       {destination ? (
-        <Details value={duration} />
+        <Fragment>
+          <Back onPress={() => setDestination(null)} >
+            <Image source={backImage} />
+          </Back>
+          <Details value={duration} />
+        </Fragment>
       ) : (
         <Search onLocationSelected={handleLocationSelected} />
       )}

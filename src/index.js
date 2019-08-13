@@ -1,7 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, YellowBox } from 'react-native';
 
 import Map from './components/Map';
+
+YellowBox.ignoreWarnings(['is deprecated']);
 
 const App = () => {
   return (
