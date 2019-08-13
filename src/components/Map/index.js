@@ -3,6 +3,7 @@ import MapView, { Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoding';
 import { View, Image } from 'react-native';
+import Config from 'react-native-config';
 
 import Search from '../Search';
 import Directions from '../Directions';
@@ -21,8 +22,8 @@ import {
   LocationTimeTextSmall,
   Back
 } from './styles';
-
-Geocoder.init('AIzaSyBj116qcXXjCWz-qDFb5Ii6iVvkrO415Qs');
+console.log(Config.GOOGLE_MAPS_API_KEY, 'Config.GOOGLE_MAPS_API_KEY')
+Geocoder.init(Config.GOOGLE_MAPS_API_KEY);
 
 const Map = () => {
   const [region, setRegion] = useState(null);
@@ -49,7 +50,7 @@ const Map = () => {
         console.log('geo_error', geo_error);
       },
       {
-        timeout: 3000,
+        timeout: 5000,
         enableHighAccuracy: true,
         maximumAge: 1000
       }

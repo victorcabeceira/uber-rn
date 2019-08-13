@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import Config from 'react-native-config';
 
 import styles from './styles';
 
@@ -14,7 +15,7 @@ const Search = ({ onLocationSelected }) => {
       enablePoweredByContainer={false}
       onPress={onLocationSelected}
       query={{
-        key: 'AIzaSyBj116qcXXjCWz-qDFb5Ii6iVvkrO415Qs',
+        key: Config.GOOGLE_MAPS_API_KEY,
         language: 'pt'
       }}
       textInputProps={{
