@@ -25,12 +25,7 @@ import {
 Geocoder.init('AIzaSyBj116qcXXjCWz-qDFb5Ii6iVvkrO415Qs');
 
 const Map = () => {
-  const [region, setRegion] = useState({
-    latitude: -15.79515321,
-    longitude: -47.93474534,
-    latitudeDelta: 0.0143,
-    longitudeDelta: 0.0134
-  });
+  const [region, setRegion] = useState(null);
   const [destination, setDestination] = useState(null);
   const [duration, setDuration] = useState(null);
   const [origin, setOrigin] = useState(null);
@@ -59,7 +54,7 @@ const Map = () => {
         maximumAge: 1000
       }
     );
-  }, [region]);
+  }, []);
 
   handleLocationSelected = ({ structured_formatting }, { geometry }) => {
     const {
