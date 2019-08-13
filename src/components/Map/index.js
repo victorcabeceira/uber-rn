@@ -9,7 +9,15 @@ import Directions from '../Directions';
 import { getPixelSize } from '../../shared/utils';
 
 import markerImage from '../../assets/images/marker.png';
-import dotImage from '../../assets/images/dot.png';
+// import dotImage from '../../assets/images/dot.png';
+
+import {
+  LocationBox,
+  LocationText,
+  LocationTimeBox,
+  LocationTimeText,
+  LocationTimeTextSmall
+} from './styles';
 
 const Map = () => {
   const [region, setRegion] = useState({
@@ -83,11 +91,25 @@ const Map = () => {
               anchor={{ x: 0, y: 0 }}
               image={dotImage}
             /> */}
+            <Marker coordinate={region} anchor={{ x: 0, y: 0 }}>
+              <LocationBox>
+                <LocationTimeBox>
+                  <LocationTimeText>31</LocationTimeText>
+                  <LocationTimeTextSmall>min</LocationTimeTextSmall>
+                </LocationTimeBox>
+                <LocationText>Cruzeiro Novo</LocationText>
+              </LocationBox>
+            </Marker>
+
             <Marker
               coordinate={destination}
               anchor={{ x: 0, y: 0 }}
               image={markerImage}
-            />
+            >
+              <LocationBox>
+                <LocationText>{destination.title}</LocationText>
+              </LocationBox>
+            </Marker>
           </Fragment>
         )}
       </MapView>
