@@ -4,6 +4,8 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import styles from './styles';
 
 const Search = ({ onLocationSelected }) => {
+  const [searchFocused, setSearchFocused] = useState(false);
+
   return (
     <GooglePlacesAutocomplete
       placeholder='Para onde?'
@@ -16,9 +18,16 @@ const Search = ({ onLocationSelected }) => {
         language: 'pt'
       }}
       textInputProps={{
+        onFocus: () => {
+          setSearchFocused(true);
+        },
+        onBlur: () => {
+          setSearchFocused(false);
+        },
         autoCapitalize: 'none',
         autoCorrect: false
       }}
+      listViewDisplayed={searchFocused}
       styles={{
         container: styles.container,
         textInputContainer: styles.textInputContainer,
