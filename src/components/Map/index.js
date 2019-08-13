@@ -6,6 +6,7 @@ import { View } from 'react-native';
 
 import Search from '../Search';
 import Directions from '../Directions';
+import Details from '../Details';
 
 import { getPixelSize } from '../../shared/utils';
 
@@ -90,7 +91,7 @@ const Map = () => {
                   edgePadding: {
                     top: getPixelSize(30),
                     right: getPixelSize(30),
-                    bottom: getPixelSize(30),
+                    bottom: getPixelSize(300),
                     left: getPixelSize(30)
                   }
                 });
@@ -124,7 +125,11 @@ const Map = () => {
         )}
       </MapView>
 
-      <Search onLocationSelected={handleLocationSelected} />
+      {destination ? (
+        <Details value={duration} />
+      ) : (
+        <Search onLocationSelected={handleLocationSelected} />
+      )}
     </View>
   );
 };
