@@ -6,6 +6,8 @@ import { View } from 'react-native';
 import Search from '../Search';
 import Directions from '../Directions';
 
+import { getPixelSize } from '../../shared/utils';
+
 const Map = () => {
   const [region, setRegion] = useState({
     latitude: -15.79515321,
@@ -55,14 +57,24 @@ const Map = () => {
         region={region}
         showsUserLocation
         loadingEnabled
+        ref={el => (this.mapView = el)}
       >
-        { destination && (
+        {destination && (
           <Directions
             origin={region}
             destination={destination}
-            onReady={() => {}}
+            onReady={result => {
+              this.mapView.fitToCoordinates(result.coordinates, {
+                edgePadding: {
+                  top: getPixelSize(30),
+                  right: getPixelSize(30),
+                  bottom: getPixelSize(30),
+                  left: getPixelSize(30)
+                }
+              });
+            }}
           />
-        ) }
+        )}
       </MapView>
 
       <Search onLocationSelected={handleLocationSelected} />
